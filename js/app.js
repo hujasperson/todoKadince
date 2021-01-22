@@ -2,20 +2,21 @@
 
 // Select the Elements 
 const clear = document.querySelector(".clear");
-const dateElement = document.getElementById(".date");
+const dateElement = document.getElementById("date");
 const list = document.getElementById("list");
 const input = document.getElementById("input");
 
 //Classes names
 const CHECK = "fa-check-circle";
 const UNCHECK = "fa-circle-thin";
-const LINE_THROUGH = "lineThrough";
+const LINE_THROUGH =  "lineThrough";
  //const SORT_BY_PEN = "pending";
-//Variables
+
+ //Variables
 let LIST , id;
 
 //get item from local storage 
-data = localStorage.getItem("TODO");
+let data = localStorage.getItem("TODO");
 
 //Check if data is not empty
 if(data){
@@ -36,28 +37,37 @@ function loadList(array){
         });
     
 }
+//clear the local storage
+clear.addEventListener("click", function(){
+    localStorage.clear();
+    location.reload();
+});
 
 // Show todays date
-const options = {weekday : "long", month:"short", day:"numeric"}
+const options = {weekday : "long", month:"short",day:"numeric"};
 const today = new Date();
 
-dataElement.innerHTML = today.toLocaleDateSTring("en-US", options);
+dateElement.innerHTML = today.toLocaleDateString("en-US", options);
 
 // add to do function 
 function addToDo(toDo, id, done, trash){
-
+    
     if(trash){ return; }
 
     const DONE = done ? CHECK : UNCHECK;
     const LINE = done ? LINE_THROUGH : "";
 
-
-    const item = '<li class="DONE"><i class="fa fa-circle-thin co" job="complete" id="${id}"></i><p class="LINE">${toDo}</p><i class="fa fa-trash-o de" job="delete" id="${id}"></i></li>';
-   
-    const position = "beforeend"
+    const item = `<li class="item">
+                    <i class="fa ${DONE} co" job="complete" id="${id}"></i>
+                    <p class="text ${LINE}">${toDo}</p>
+                    <i class="fa fa-trash-o de" job="delete" id ="${id}"></i>
+                  </li>
+                `;
+    const position = "beforeend";
 
     list.insertAdjacentHTML(position, item);
 }
+
 
 // add an item to the list user the enter key
 document.addEventListener("keyup", function(even){
@@ -75,7 +85,7 @@ document.addEventListener("keyup", function(even){
                 trash : false
             });
             //add item to local storage 
-            localStorage.setItem("TODO", JSON.stringify(LIST));
+localStorage.setItem("TODO", JSON.stringify(LIST));
 
             id++;
         }
@@ -94,19 +104,18 @@ function completeToDo(element){
 
 // remove to do
 function removeToDO(element){
-    element.parentNode.parentNode.removeChiled(element.parentNode);
+    element.parentNode.parentNode.removeChild(element.parentNode);
 
     LIST[element.id].trash = true;
-
 }
 
 //target the items created 
 
 list.addEventListener("click", function(event){
-    const element =event.target;
-    const elementJob =element.attributes.job.value;
+    const element = event.target;
+    const elementJob = element.attributes.job.value;
 
-    if(element == "complete"){
+    if(elementJob == "complete"){
         completeToDo(element);
     }else if(elementJob == "delete"){
         removeToDO(element);
