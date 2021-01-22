@@ -77,7 +77,7 @@ body{
     position: absolute;
     font-size: 25px;
     padding-left:5px;
-    left:15px;
+    left:17px;
     top:10px;
 }
 .item i.co:hover{
@@ -109,6 +109,16 @@ body{
 .item i.de:hover{
     color:#af0000;
     cursor: pointer;
+}
+.item i.dd{
+    position: absolute;
+    font-size: 25px;
+    right:40px;
+    top:10px;
+}
+.item i.dd:hover{
+    color:#af0000;
+    cursor: pointer;    
 }
 /* ------------ add item ------------ */
 .add-to-do{
