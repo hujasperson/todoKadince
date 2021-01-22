@@ -54,12 +54,16 @@ function addToDo(toDo, id, done, trash){
     
     if(trash){ return; }
 
+        
+    
+
     const DONE = done ? CHECK : UNCHECK;
     const LINE = done ? LINE_THROUGH : "";
 
     const item = `<li class="item">
                     <i class="fa ${DONE} co" job="complete" id="${id}"></i>
                     <p class="text ${LINE}">${toDo}</p>
+                    <i class="fa fa-gear dd" job="edit" id="${id}"></i>
                     <i class="fa fa-trash-o de" job="delete" id ="${id}"></i>
                   </li>
                 `;
@@ -108,6 +112,13 @@ function removeToDO(element){
 
     LIST[element.id].trash = true;
 }
+// edit to do 
+function editToDO(element){
+    element.parentNode.parentNode.editChild(element.parentNode);
+
+    LIST[element.id].gear = true;
+}
+
 
 //target the items created 
 
@@ -117,6 +128,8 @@ list.addEventListener("click", function(event){
 
     if(elementJob == "complete"){
         completeToDo(element);
+    }else if(elementJob == "edit"){
+        editToDO(element);
     }else if(elementJob == "delete"){
         removeToDO(element);
     }
